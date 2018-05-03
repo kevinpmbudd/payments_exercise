@@ -1,22 +1,18 @@
-class PaymentsController < ActionController::API
-
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    render json: 'not_found', status: :not_found
-  end
-
+class PaymentsController < ApplicationController
   def index
-    loan = Loan.find_by_id(params[:loan_id])
+    loan = Loan.find(params[:loan_id])
     render json: loan.payments
   end
 
   def show
-    payment = Payment.find_by_id(params[:id])
+    payment = Payment.find(params[:id])
     render json: payment
   end
 
   def create
+    loan = Loan.find(params[:loan_id])
     payment = Payment.new(payment_params)
-    payment.loan = Loan.find_by_id(params[:loan_id])
+    payment.loan = loan 
 
     if payment.save
       render json: payment

@@ -9,7 +9,7 @@ RSpec.describe LoansController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it "responds with json of loan" do
+    it 'responds with json of loan' do
       Loan.create!(funded_amount: 100.0)
       expected = Loan.all.each.to_json({:methods => :outstanding_balance})
       get :index
